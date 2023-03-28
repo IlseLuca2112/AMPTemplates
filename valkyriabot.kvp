@@ -1,7 +1,7 @@
 App.AdminMethod=PinballWizard
 App.ApplicationReadyMode=Immediate
 App.BaseDirectory=./valkyriabot/
-App.CommandLineArgs=bot.js
+App.CommandLineArgs=-v
 App.CommandLineParameterDelimiter= 
 App.CommandLineParameterFormat=-{0} "{1}"
 App.DisplayName=ValkyriaBot
