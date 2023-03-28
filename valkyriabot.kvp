@@ -1,11 +1,11 @@
 App.AdminMethod=PinballWizard
 App.ApplicationReadyMode=Immediate
 App.BaseDirectory=./valkyriabot/
-App.CommandLineArgs=~/.ampdata/Instances/Valkyria01/GenericApplication/ValkyriaBot/bot.js
+App.CommandLineArgs=bot.js
 App.CommandLineParameterDelimiter= 
 App.CommandLineParameterFormat=-{0} "{1}"
 App.DisplayName=ValkyriaBot
-App.ExecutableLinux=node
+App.ExecutableLinux=/bin/node
 App.ExecutableWin=
 App.ExitMethod=String
 App.ExitString=stop
