@@ -100,7 +100,7 @@
     {
         "DisplayName":"Mods List",
         "Category":"ARK Server Settings",
-        "Description":"Comma-separated and ordered list of IDs of mods to load (map mods will not load unless named as a \"Custom\" map under Custom Map Name). Mod files must be in ShooterGame/Content/Mods. If \"Automatically Manage Mods\" is enabled, the mods listed will be installed by the server",
+        "Description":"Comma-separated and ordered list of IDs of mods to load (map mods will not load unless named as a \"Custom\" map under Custom Map Name). ONE LINE ONLY! Mod files must be in ShooterGame/Content/Mods. If \"Automatically Manage Mods\" is enabled, the mods listed will be installed by the server",
         "Keywords":"load,mods,gamemodids,activemods",
         "FieldName":"GameModIds",
         "InputType":"Textarea",
@@ -115,7 +115,7 @@
     {
         "DisplayName":"Active Event",
         "Category":"ARK Server Settings",
-        "Description":"Sets the server's active event, if any. Some events may only work partially or not at all. Most special event assets are removed after the event",
+        "Description":"Sets the server's active event, if any. Some events may only work partially or not at all. Most special event assets are removed after the event. Use Custom and set Custom Event Name for an event not listed",
         "Keywords":"active,event,activeevent",
         "FieldName":"ActiveEvent",
         "InputType":"enum",
@@ -127,16 +127,30 @@
             "None":"None",
             "birthday":"ARK: 5th Anniversary",
             "ark7th":"ARK: 7th Anniversary",
-            "FearEvolved":"ARK: Fear Evolved 6",
-            "TurkeyTrial":"ARK: Turkey Trial 5",
+            "FearEvolved":"ARK: Fear Evolved",
+            "TurkeyTrial":"ARK: Turkey Trial",
             "Arkaeology":"ARK: ARKaeology",
-            "Easter":"ARK: Eggcellent Adventure 7",
+            "Easter":"ARK: Eggcellent Adventure (Easter)",
             "ExtinctionChronicles":"Extinction Chronicles",
-            "vday":"ARK: Love Evolved 3",
+            "vday":"ARK: Love Evolved (vday)",
             "PAX":"ARK: PAX Party",
-            "Summer":"ARK: Summer Bash 2021",
-            "WinterWonderland":"ARK: Winter Wonderland 7"
+            "Summer":"ARK: Summer Bash (Summer)",
+            "WinterWonderland":"ARK: Winter Wonderland",
+            "{{CustomEvent}}":"Custom"
         }
+    },
+    {
+        "DisplayName":"Custom Event Name",
+        "Category":"ARK Server Settings",
+        "Description":"Sets a custom active event name for the server. \"Custom\" type must be selected under Active Event",
+        "Keywords":"custom,active,event,activeevent",
+        "FieldName":"CustomEvent",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomEvent",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Whitelisted Server Admins",
@@ -237,7 +251,7 @@
     {
         "DisplayName":"MultiHome IP Binding",
         "Category":"ARK Server Settings",
-        "Description":"If required, you can change the binding of the server and RCON to an internal interface IP by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first. Ensure AMP itself can reach that IP or the console will not work",
+        "Description":"If required, you can change the binding of the server and RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
         "Keywords":"ip,binding,address,multihome",
         "FieldName":"MultiHome",
         "InputType":"hidden",
@@ -984,6 +998,22 @@
         }
     },
     {
+        "DisplayName":"Allow Flyer Speed Levelling",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, flyers can have their movement speed levelled up",
+        "Keywords":"flyer,movement,speed,level,up,allowflyerspeedleveling",
+        "FieldName":"AllowFlyerSpeedLeveling",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AllowFlyerSpeedLeveling",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-AllowFlyerSpeedLeveling "
+        }
+    },
+    {
         "DisplayName":"Allow Cave Flyers",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, flyers will always be allowed into caves",
@@ -1057,7 +1087,7 @@
         "MinValue":"0",
         "IsFlagArgument":false,
         "ParamFieldName":"ServerAutoForceRespawnWildDinosInterval",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"604800",
         "Placeholder":"604800",
         "Suffix":"seconds",
@@ -1182,7 +1212,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"PreventDiseases",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1198,7 +1228,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"NonPermanentDiseases",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",

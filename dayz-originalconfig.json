@@ -221,7 +221,7 @@
     {
         "DisplayName":"Load Mods",
         "Category":"DayZ Server Settings",
-        "Description":"Semi-colon separated list (moddir1;moddir2) of mod directories to load (not server-side only mods). Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths",
+        "Description":"Semi-colon separated list (moddir1;moddir2) of mod directories to load (not server-side only mods). ONE LINE ONLY! Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths",
         "Keywords":"mods,addons,modding,modification,workshop,plugins,mod",
         "FieldName":"mod",
         "InputType":"Textarea",
@@ -235,7 +235,7 @@
     {
         "DisplayName":"Load Server Mods",
         "Category":"DayZ Server Settings",
-        "Description":"Semi-colon separated list (moddir1;moddir2) of server-side only mod directories to load (the mods are not broadcast to clients). Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths",
+        "Description":"Semi-colon separated list (moddir1;moddir2) of server-side only mod directories to load (the mods are not broadcast to clients). ONE LINE ONLY! Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths",
         "Keywords":"mods,addons,modding,modification,workshop,plugins,server,servermod",
         "FieldName":"serverMod",
         "InputType":"Textarea",
@@ -247,9 +247,36 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Client Mods",
+        "Category":"DayZ Server Settings",
+        "Description":"Semi-colon separated list (moddir1;moddir2) of client-side only mod directories. ONE LINE ONLY! These won't be loaded by the server, but will be used by the Manage Bikeys setting if enabled. Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths",
+        "Keywords":"mods,addons,modding,modification,workshop,plugins,client,clientmod",
+        "FieldName":"clientmod",
+        "InputType":"Textarea",
+        "ParamFieldName":"clientmod",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Manage Bikeys",
+        "Category":"DayZ Server Settings",
+        "Description":"If enabled, the bikey files for each of the mods specified in Load Mods and Client Mods will be copied to the 'keys' directory on server start, to enable addon signature verification. All existing bikeys in that directory (other than the default 'dayz.bikey') will be deleted",
+        "Keywords":"mods,addons,bikeys",
+        "FieldName":"ManageBikeys",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ManageBikeys",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Server/RCON IP Binding",
         "Category":"DayZ Server Settings",
-        "Description":"If required, you can change the binding of the server and BattlEye RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first",
+        "Description":"If required, you can change the binding of the server and BattlEye RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
         "Keywords":"ip,binding",
         "FieldName":"ip",
         "InputType":"hidden",
@@ -265,10 +292,12 @@
         "Keywords":"file,patching,filepatching",
         "FieldName":"filePatching",
         "InputType":"checkbox",
-        "IsFlagArgument":true,
+        "IsFlagArgument":false,
         "ParamFieldName":"filePatching",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"-filePatching"
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-filePatching ",
+            "False":"",
+            "True":"-filePatching "
     },
     {
         "DisplayName":"Allow Client File Patching",
@@ -280,7 +309,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"allowFilePatching",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -296,24 +325,40 @@
         "IsFlagArgument":false,
         "ParamFieldName":"forceSameBuild",
         "IncludeInCommandLine":false,
-        "DefaultValue":"0",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
         }
     },
     {
-        "DisplayName":"FPS Limit",
+        "DisplayName":"Enable FPS Limit",
         "Category":"DayZ Server Settings",
-        "Description":"Sets the limit for the server FPS, to lower CPU usage of low population servers",
-        "Keywords":"frames,fps,limitfps",
+        "Description":"If enabled, the server FPS will be limited to the value set under \"FPS Limit Value\". Disabling this setting can have a severe effect on server performance",
+        "Keywords":"enable,frames,fps,limitfps",
+        "FieldName":"EnableLimitFPS",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"EnableLimitFPS",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-limitFPS={{limitFPS}} ",
+        "EnumValues":{
+            "False":"",
+            "True":"-limitFPS={{limitFPS}} "
+        }
+    },
+    {
+        "DisplayName":"FPS Limit Value",
+        "Category":"DayZ Server Settings",
+        "Description":"Sets the limit for the server FPS, to lower CPU usage of low population servers. Requires \"Enable FPS Limit\" to be set",
+        "Keywords":"frames,fps,value,limitfps",
         "FieldName":"limitFPS",
         "InputType":"number",
         "MinValue":"1",
         "MaxValue":"200",
         "IsFlagArgument":false,
         "ParamFieldName":"limitFPS",
-        "IncludeInCommandLine":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"200",
         "Placeholder":"200",
         "Suffix":"fps",
@@ -478,20 +523,18 @@
     {
         "DisplayName":"Enable Darker Nights",
         "Category":"DayZ Gameplay Settings",
-        "Description":"If enabled, nights will be darker on the server",
+        "Description":"Use 1 for darker nights on vanilla maps. Modded maps maybe use different values",
         "Keywords":"light,lighting,dark,night,lightingconfig",
         "FieldName":"lightingConfig",
-        "InputType":"checkbox",
+        "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"lightingConfig",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
+        "Placeholder":"0",
+        "EnumValues":{}
     },
-     {
+    {
         "DisplayName":"Disable Base Damage",
         "Category":"DayZ Gameplay Settings",
         "Description":"If set, disables the damage or destruction of fences and watchtowers",
@@ -533,7 +576,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"enableDebugMonitor",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -661,6 +704,22 @@
         "DefaultValue":"1375",
         "Placeholder":"1375",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Gameplay Settings File",
+        "Category":"DayZ Gameplay Settings",
+        "Description":"If enabled, allows the use of cfggameplay.json to modify [gameplay settings](https://community.bistudio.com/wiki/DayZ:Gameplay_Settings)",
+        "Keywords":"gameplay,settings,file,cfggameplay,enablecfggameplayfile",
+        "FieldName":"enableCfgGameplayFile",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"enableCfgGameplayFile",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     },
     {
         "DisplayName":"Storage Auto Fix",
@@ -808,50 +867,50 @@
     {
         "DisplayName":"Log Server FPS",
         "Category":"DayZ Misc Settings",
-        "Description":"If enabled, the server logs the average server FPS",
+        "Description":"Sets the interval at which the server logs the average server FPS. 0 = disabled",
         "Keywords":"log,average,fps,logaveragefps",
         "FieldName":"logAverageFps",
-        "InputType":"checkbox",
+        "InputType":"number",
+        "MinValue":"0",
         "IsFlagArgument":false,
         "ParamFieldName":"logAverageFps",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
+        "Placeholder":"0",
+        "Suffix":"seconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Log Server Memory",
         "Category":"DayZ Misc Settings",
-        "Description":"If enabled, the server logs the server memory usage",
+        "Description":"Sets the interval at which the server logs the server memory usage. 0 = disabled",
         "Keywords":"log,memory,usage,logmemory",
         "FieldName":"logMemory",
-        "InputType":"checkbox",
+        "InputType":"number",
+        "MinValue":"0",
         "IsFlagArgument":false,
         "ParamFieldName":"logMemory",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
+        "Placeholder":"0",
+        "Suffix":"seconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Log Player Count",
         "Category":"DayZ Misc Settings",
-        "Description":"If enabled, the server logs the count of currently connected players",
+        "Description":"Sets the interval at which the server logs the count of currently connected players. 0 = disabled",
         "Keywords":"log,connected,players,logplayers",
         "FieldName":"logPlayers",
-        "InputType":"checkbox",
+        "InputType":"number",
+        "MinValue":"0",
         "IsFlagArgument":false,
         "ParamFieldName":"logPlayers",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
+        "Placeholder":"0",
+        "Suffix":"seconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Log Player Hits Only",

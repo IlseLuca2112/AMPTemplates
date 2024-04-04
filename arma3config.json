@@ -124,7 +124,7 @@
     {
         "DisplayName":"Load Mods",
         "Category":"Arma Server Settings",
-        "Description":"Semi-colon separated list (moddir1;moddir2) of mod directories to load (not server-side only mods). Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths. Alternatively use the Startup Parameters File option",
+        "Description":"Semi-colon separated list (moddir1;moddir2) of mod directories to load (not server-side only mods). ONE LINE ONLY! Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths. Alternatively use the Startup Parameters File option",
         "Keywords":"mods,addons,mod",
         "FieldName":"mod",
         "InputType":"Textarea",
@@ -138,7 +138,7 @@
     {
         "DisplayName":"Load Server Mods",
         "Category":"Arma Server Settings",
-        "Description":"Semi-colon separated list (moddir1;moddir2) of server-side only mod directories to load (the mods are not broadcast to clients). Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths. Alternatively use the Startup Parameters File option",
+        "Description":"Semi-colon separated list (moddir1;moddir2) of server-side only mod directories to load (the mods are not broadcast to clients). ONE LINE ONLY! Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths. Alternatively use the Startup Parameters File option",
         "Keywords":"mods,addons,server,servermod",
         "FieldName":"serverMod",
         "InputType":"Textarea",
@@ -150,9 +150,36 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Client Mods",
+        "Category":"Arma Server Settings",
+        "Description":"Semi-colon separated list (moddir1;moddir2) of client-side only mod directories. ONE LINE ONLY! These won't be loaded by the server, but will be used by the Manage Bikeys setting if enabled. Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths",
+        "Keywords":"mods,addons,modding,modification,workshop,plugins,client,clientmod",
+        "FieldName":"clientmod",
+        "InputType":"Textarea",
+        "ParamFieldName":"clientmod",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Manage Bikeys",
+        "Category":"Arma Server Settings",
+        "Description":"If enabled, the bikey files for each of the mods specified in Load Mods and Client Mods will be copied to the 'keys' directory on server start, to enable addon signature verification. All existing bikeys in that directory (other than the default 'a3.bikey') will be deleted",
+        "Keywords":"mods,addons,bikeys",
+        "FieldName":"ManageBikeys",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ManageBikeys",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Server/RCON IP Binding",
         "Category":"Arma Server Settings",
-        "Description":"If required, you can change the binding of the server and BattlEye RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first",
+        "Description":"If required, you can change the binding of the server and BattlEye RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
         "Keywords":"ip,binding",
         "FieldName":"ip",
         "InputType":"hidden",
@@ -227,7 +254,7 @@
     {
         "DisplayName":"Minimum Client Version",
         "Category":"Arma Server Settings",
-        "Description":"Sets the minimum client version, below which clients won't be allowed to join. Default of 99999999 equates to the server version",
+        "Description":"Sets the minimum client version, below which clients won't be allowed to join. Default of 99999999 equates to the server version. NOTE: If the server uses the Performance Profiling Build in any way, set this to 0, otherwise no client can connect",
         "Keywords":"required,build,requiredbuild",
         "FieldName":"requiredBuild",
         "InputType":"number",
@@ -255,9 +282,25 @@
         }
     },
     {
+        "DisplayName":"Headless Clients To Launch",
+        "Category":"Arma Server Settings",
+        "Description":"Sets the number of headless clients to launch when the server starts. Further information on configuration is [here](https://discourse.cubecoders.com/t/arma-3-generic-guide/3475#h-6-headless-clients-9)",
+        "Keywords":"headless,client",
+        "FieldName":"HeadlessClientsNum",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"5",
+        "IsFlagArgument":false,
+        "ParamFieldName":"HeadlessClientsNum",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Headless Client IPs",
         "Category":"Arma Server Settings",
-        "Description":"Sets the IPs of [headless clients](https://community.bistudio.com/wiki/Arma_3:_Headless_Client) able to connect to the server. Multiples connections and IPs are allowed. Format is \"IP1\",\"IP2\"",
+        "Description":"Sets the IPs of headless clients able to connect to the server. Multiples connections and IPs are allowed. Format is \"IP1\",\"IP2\"",
         "Keywords":"headless,client,ip,headlessclients",
         "FieldName":"headlessClients",
         "InputType":"text",
@@ -265,8 +308,24 @@
         "ParamFieldName":"headlessClients",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "Placeholder":"\"123.456.789.12\",\"210.987.654.321\"",
+        "Placeholder":"\"127.0.0.1\",\"210.187.254.121\"",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Headless Client Startup Parameters File",
+        "Category":"Arma Server Settings",
+        "Description":"If enabled, allows the use of a [parameters file](https://community.bistudio.com/wiki/Startup_Parameters_Config_File) for additional startup parameters for headless clients. File is \"hc_parameters.txt\" in the server base directory. Useful if the server also uses its own Startup Parameters File for mods. Use with care",
+        "Keywords":"headless,client,custom,server,arguments,parameters,file,parfile",
+        "FieldName":"hc_parfile",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"hc_parfile",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"hc_parameters.txt"
+        }
     },
     {
         "DisplayName":"Local Headless Client IPs",
@@ -280,6 +339,24 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "Placeholder":"\"127.0.0.1\",\"192.168.1.2\"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"FPS Limit",
+        "Category":"Arma Server Settings",
+        "Description":"Sets the limit for the server FPS. Setting this too high can have an effect on server performance",
+        "Keywords":"frames,fps,limitfps",
+        "FieldName":"limitFPS",
+        "InputType":"number",
+        "MinValue":"5",
+        "MaxValue":"1000",
+        "IsFlagArgument":false,
+        "ParamFieldName":"limitFPS",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"50",
+        "Placeholder":"50",
+        "Suffix":"fps",
         "EnumValues":{}
     },
     {
@@ -313,9 +390,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Use Startup Parameters File",
+        "DisplayName":"Use Server Startup Parameters File",
         "Category":"Arma Server Settings",
-        "Description":"If enabled, allows the use of a [parameters file](https://community.bistudio.com/wiki/Startup_Parameters_Config_File) for additional startup parameters. File is \"parameters.txt\" in the server base directory. Useful for long startup parameters such as -mods or -servermods. Use with care",
+        "Description":"If enabled, allows the use of a [parameters file](https://community.bistudio.com/wiki/Startup_Parameters_Config_File) for additional startup parameters for the server. File is \"parameters.txt\" in the server base directory. Useful for long startup parameters such as -mod or -serverMod. Use with care",
         "Keywords":"custom,server,arguments,parameters,file,parfile",
         "FieldName":"parfile",
         "InputType":"checkbox",
@@ -325,7 +402,7 @@
         "DefaultValue":"",
         "EnumValues":{
             "False":"",
-            "True":"-par=./parameters.txt "
+            "True":"-par=parameters.txt "
         }
     },
     {
@@ -545,30 +622,13 @@
         "IsFlagArgument":false,
         "ParamFieldName":"forcedDifficulty",
         "IncludeInCommandLine":false,
-        "DefaultValue":"Regular",
+        "DefaultValue":"",
         "EnumValues":{
+            "":"None (default)",
             "Recruit":"Recruit",
-            "Regular":"Regular (default)",
+            "Regular":"Regular",
             "Veteran":"Veteran",
             "Custom":"Custom"
-        }
-    },
-    {
-        "DisplayName":"AI Level",
-        "Category":"Arma Gameplay Settings",
-        "Description":"Sets the AI skill level on the server. To use custom AI level settings, you must configure them in the profile within the A3Master directory",
-        "Keywords":"ai,level,preset,ailevelpreset",
-        "FieldName":"aiLevelPreset",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"aiLevelPreset",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"Low",
-            "1":"Normal (default)",
-            "2":"High",
-            "3":"Custom"
         }
     },
     {
@@ -1144,7 +1204,7 @@
     {
         "DisplayName":"Server Branch",
         "Category":"SteamCMD and Updates",
-        "Description":"Sets the server branch to install. NOTE: Update the server after switching branches!",
+        "Description":"Sets the server branch (or branches) to install. NOTE: Update the server after switching branches, and set the Minimum Client Version to 0 if using the Performance Profiling Build in any way!",
         "Keywords":"server,branch,depot",
         "FieldName":"ServerBranch",
         "InputType":"enum",
@@ -1154,7 +1214,10 @@
         "DefaultValue":"public",
         "EnumValues":{
             "public":"Public (default)",
-            "creatordlc":"Creator DLC Build"
+            "profiling":"Performance Profiling Build",
+            "creatordlc":"Creator DLC Build",
+            "contact":"Contact Build",
+            "creatordlc-profiling":"Creator DLC + Performance Profiling Builds"
         }
     }
 ]
