@@ -80,18 +80,20 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -R ./ut-server/System64/* ./ut-server/System'",
+        "UpdateSourceArgs":"-c '\\cp -Rf ./ut-server/System64/* ./ut-server/System >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"PatchVersion",
-        "UpdateSourceConditionValue":"469c"
+        "UpdateSourceConditionValue":"469c",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Copy OldUnreal Patch Files",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -R ./ut-server/System64/* ./ut-server/System'",
+        "UpdateSourceArgs":"-c '\\cp -Rf ./ut-server/System64/* ./ut-server/System >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"PatchVersion",
-        "UpdateSourceConditionValue":"469d"
+        "UpdateSourceConditionValue":"469d",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Pause Update Stages",

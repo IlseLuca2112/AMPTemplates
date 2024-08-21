@@ -19,6 +19,7 @@ Meta.Prerequsites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
+Meta.ConfigVersion=1.2
 Meta.AppConfigId=23e04f07-dab1-4741-a6e9-e9d0d292c8f1
 App.DisplayName=Arma Reforger
 App.RootDir=./arma-reforger/
@@ -43,7 +44,7 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":2001,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":17777,"Ref":"QueryPort","Name":"Query Port","Description":"Port for Steam query traffic"},{"Protocol":"UDP","Port":2002,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.Ports=@IncludeJson[arma-reforgerports.json]
 App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
@@ -71,12 +72,12 @@ App.MonitorChildProcessName=
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
-Console.FilterMatchRegex=(\[0m|\[33m)
+Console.FilterMatchRegex=\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Unknown command)$
 Console.AppReadyRegex=^[\d:\s]*ENGINE\s+: Game successfully created\.$
-Console.UserJoinRegex=^[\d:\s]*NETWORK\s+: ### Connecting player: connectionID=(?<userid>.+), Name=(?<username>.*)$
-Console.UserLeaveRegex=^[\d:\s]*NETWORK\s+: Player disconnected: connectionID=(?<userid>.+)$
+Console.UserJoinRegex=^\s+DEFAULT\s+: BattlEye Server: 'Player #(?<sessionid>.+?) (?<username>.+) \((?<endpoint>.*?):\d+\) connected'$
+Console.UserLeaveRegex=^\s+DEFAULT\s+: BattlEye Server: 'Player #(?<sessionid>.+?) (?<username>.+) disconnected'$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
